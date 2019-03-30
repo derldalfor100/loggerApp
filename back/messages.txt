@@ -1,0 +1,2 @@
+{"name":"David","type":"info","message":"How r u?","date":"2019-03-05"}
+{"name":"Ariel","type":"warn","message":"So so.","date":"2019-03-20"}

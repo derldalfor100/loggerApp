@@ -1,10 +1,9 @@
-function connect() {
-    let dataBody = JSON.stringify({ name: "david" });
+function connect(dataBody) {
     fetch('http://localhost:3000/', {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
-        body: dataBody,
+        body: JSON.stringify(dataBody),
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
@@ -17,16 +16,27 @@ function sendMessage() {
     let name = document.getElementById('name').value;
     let selector = document.getElementById('selector');
     let selected = selector.options[selector.selectedIndex].value;
+    let theDate = document.getElementById('dateInput').value;
     let message = document.getElementById('message').value;
+    let infoObj = {
+        name: name,
+        type: selected,
+        message: message,
+        date: theDate
+    };
+    console.log('before:', getMessages());
     if(selected === 'verbose' || selected === 'fatal') {
-
+        addMessage(infoObj);
+        console.log('after:', getMessages());
     }else {
-
+        connect(infoObj);
     }
 }
 
 function addMessage(obj) {
-    let item = localStorage.setItem('messages', JSON.stringify(obj));
+    let item = getMessages();
+    item.push(obj);
+    localStorage.setItem('messages', JSON.stringify(item));
 }
 
 function getMessages() {
